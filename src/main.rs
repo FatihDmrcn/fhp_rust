@@ -281,10 +281,10 @@ impl fmt::Display for Dir {
 
 fn main() {
     let rows = 40;
-    let cols = 80; //84;
+    let cols = 100;
     let mut universe = Universe::new(&rows, &cols);
     //
-    let r = 4;
+    let r = 2;
     let d = 2*r;
     let w = cols*d+r;
     let h = d*rows-(r/2);
