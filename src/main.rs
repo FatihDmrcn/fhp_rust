@@ -280,18 +280,25 @@ impl fmt::Display for Dir {
 
 
 fn main() {
-    let rows = 40;
-    let cols = 100;
+    let rows = 70;
+    let cols = 140;
     let mut universe = Universe::new(&rows, &cols);
     //
-    let r = 2;
+    let r = 4;
     let d = 2*r;
     let w = cols*d+r;
     let h = d*rows-(r/2);
-    let t_total = 201;
-    let area = BitMapBackend::gif("misc/animated.gif", (w as u32, h as u32), 10/*ms*/).unwrap().into_drawing_area();
-    let pb = ProgressBar::new(t_total);
-    for _ in 0..=t_total {
+    let t_convergence = 500;
+    let area = BitMapBackend::gif("misc/animated.gif", (w as u32, h as u32), 100/*ms*/).unwrap().into_drawing_area();
+    let pb_convergence = ProgressBar::new(t_convergence-1);
+    for _ in 1..t_convergence {
+        universe.cells = Universe::next_step(&universe.cells);
+        pb_convergence.inc(1);
+    }
+    pb_convergence.finish_with_message("Convergence done!");
+    let t_actual = 15;
+    let pb = ProgressBar::new(t_actual);
+    for _ in 1..=t_actual {
         area.fill(&WHITE).unwrap();
         for cell in universe.cells.iter() {
             let _r: i32 = cell.row as i32;
